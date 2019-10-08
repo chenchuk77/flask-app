@@ -9,5 +9,6 @@ WORKDIR /app
 RUN pip install -r requirements.txt
 COPY . /app
 
+#CMD [ "/bin/sleep", "10m" ]
 ENTRYPOINT [ "python" ]
 CMD [ "app.py" ]

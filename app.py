@@ -1,13 +1,13 @@
-# flask_web/app.py
+# flask-app/app.py
 
-From flask import Flask
+import sys
+from flask import Flask
 app = Flask(__name__)
 
 @app.route('/')
-def hello_world:
-    return 'Hey, we have Flask in a Docker container!'
+def info():
+    return 'flask running on python {}'.format(sys.version)
 
-
-if __name == '__main__':
+if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
 
