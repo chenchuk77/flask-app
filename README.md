@@ -1,27 +1,54 @@
-This is a simple app for introducing docker containers.
+# flask-app
+This is a simple Python Flask application which is a web service. The application will be installed in a Docker container, showing how to pass environment variables into the Docker runtime.
 
-1. Build the image
+## To build and run
+Build a Docker image by parsing Dockerfile in the current folder
 ```
-$ docker build -t chenchuk/flask-app:1.0 .
+[~/dev/flask-app] $ docker build -t chenchuk/flask-app:1.0 .
 ```
-
-2. Start a container from that image
+Start a Docker container from the built image,
 ```
-$ docker run -e TARGET_ENVIRONMENT=dev --name flask-app -d -p 5000:5000 chenchuk/flask-app:1.0
+[~/dev/flask-app] $ docker run -e TARGET_ENVIRONMENT=dev \
+             --name flask-app -d -p 5000:5000 \
+             chenchuk/flask-app:1.0
 ```
-
-3. Check service
+Check the web service
 ```
-$ curl http://localhost/
-flask running on python 2.7.12 (default, Aug 22 2019, 16:36:40)
-[GCC 5.4.0 20160609]
+[~/dev/flask-app] $ curl http://localhost:5000/
+{
+  "containerId": "66bf2ff6c24b",
+  "environment": "prod",
+  "pythonVersion": "2.7.12"
 ```
-
-## use the redeploy.sh script for development, it speeds up the development cycle with this procedure :
+## Development
+Use the redeploy.sh script for development, it speeds up the development cycle with this procedure :
 
 1. stop and delete a flask-app container if exists
 2. builds a docker image (overrides)
 3. start a container
 4. test the container
 
+
+## Example
+Run the redeploy.sh script after modifying files
+```
+[~/dev/flask-app]  $ ./redeploy.sh prod
+stopping container flask-app
+flask-app
+flask-app
+66bf2ff6c24bebb87fc2f3df393688464b6b19ca35a066800e3f8e8bdbd1b11d
+checking container web service at localhost:5000
+{
+  "containerId": "66bf2ff6c24b",
+  "environment": "prod",
+  "pythonVersion": "2.7.12"
+}
+```
+Check the Docker daemon
+```
+[~/dev/flask-app]  $ docker ps
+CONTAINER ID        IMAGE                    COMMAND             CREATED             STATUS              PORTS                    NAMES
+66bf2ff6c24b        chenchuk/flask-app:1.0   "python app.py"     3 minutes ago       Up 3 minutes        0.0.0.0:5000->5000/tcp   flask-app
+
+```
 
