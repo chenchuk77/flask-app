@@ -17,8 +17,7 @@ flask running on python 2.7.12 (default, Aug 22 2019, 16:36:40)
 [GCC 5.4.0 20160609]
 ```
 
-use the redeploy.sh script for development, it speeds up the development cycle
-with this procedure :
+## use the redeploy.sh script for development, it speeds up the development cycle with this procedure :
 
 1. stop and delete a flask-app container if exists
 2. builds a docker image (overrides)
